@@ -4,6 +4,10 @@
 
 ## Install
 
+Create `.env` file
+```
+MONGODB_URI=<Your MongoDB URI>
+```
 Install dependencies for mobile only
 ```
 ➜ npm i
