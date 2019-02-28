@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import axios from 'axios';
+import nanoid from 'nanoid/non-secure';
 
 axios.defaults.baseURL = 'http://10.0.2.2:8080/api';
 
@@ -35,12 +36,28 @@ class TodosProvider extends Component {
       .catch(err => Alert.alert('Delete failed!!!'))
   }
 
+  onAddTodo(todo) {
+    const { todos } = this.state;
+    const cloneTodos = [...todos];
+    todo._id = nanoid();
+    cloneTodos.push(todo);
+
+    this.setState({
+      todos: cloneTodos
+    });
+
+    axios.post('/todos', todo)
+      .then( res => Alert.alert(`${todo.name} was created!!!`))
+      .catch(err => Alert.alert('Create failed!!!'))
+  }
+
   render() {
     return (
       <TodosContext.Provider
         value={{
           todos: this.state.todos,
-          onDeleteTodo: this.onDeleteTodo.bind(this)
+          onDeleteTodo: this.onDeleteTodo.bind(this),
+          onAddTodo: this.onAddTodo.bind(this)
         }}
       >
         {this.props.children}

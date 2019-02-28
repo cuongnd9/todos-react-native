@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button, CheckBox, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+import { TodosConsumer } from '../contexts/TodosContext';
 
 export default class extends React.Component {
   constructor(props) {
@@ -17,20 +18,10 @@ export default class extends React.Component {
     headerTitle: 'Add Todo'
   };
 
-  onChange() {
-    this.setState({
-      text: this.refs.input.value
-    });
-  }
-
   onPress() {
     this.setState(state => ({
       checked: !state.checked
     }));
-  }
-
-  onButtonPress() {
-    
   }
 
   render() {
@@ -38,7 +29,7 @@ export default class extends React.Component {
     return (
       <View style={styles.container}>
         <Input
-          ref='input'
+          name='text'
           containerStyle={styles.input}
           inputStyle={styles.inputText}
           placeholder='Enter your todo...'
@@ -50,10 +41,10 @@ export default class extends React.Component {
             />
           }
           leftIconContainerStyle={styles.inputIcon}
-          onChange={this.onChange.bind(this)}
+          onChangeText={text => this.setState({text})}
         />
         <CheckBox
-          title='Click Here'
+          title='Active'
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'
           checkedColor='green'
@@ -61,14 +52,24 @@ export default class extends React.Component {
           onPress={this.onPress.bind(this)}
           textStyle={styles.checkBox}
         />
-        <Button 
-          containerStyle={styles.button} 
-          title='Save' 
-          titleStyle={{color: 'blue', paddingLeft: 8}} 
-          type='outline' 
-          icon={<Icon name='edit' size={15} color='blue' />}
-          onPress={this.onButtonPress.bind(this)}
-        />
+        <TodosConsumer>
+          {
+            ({ onAddTodo }) => {
+              const { text: name, checked: isCompleted } = this.state;
+              const todo = { name, isCompleted };
+              return (
+                <Button 
+                  containerStyle={styles.button} 
+                  title='Save' 
+                  titleStyle={{color: 'blue', paddingLeft: 8}} 
+                  type='outline' 
+                  icon={<Icon name='edit' size={15} color='blue' />}
+                  onPress={onAddTodo.bind(this, todo)}
+                />
+              );
+            }
+          }
+        </TodosConsumer>
       </View>
     );
   }
