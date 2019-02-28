@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class extends Component {
   render() {
-    const { todo, onItemClick } = this.props;
+    const { todo, onItemClick, onDeleteTodo } = this.props;
     return (
       <TouchableOpacity activeOpacity={0.3} onPress={onItemClick}>
         <View style={styles.container}>
@@ -19,12 +19,21 @@ export default class extends Component {
             />
           </View>
           <View style={styles.groupButton}>
-            <Button containerStyle={styles.editButton} title='Edit' titleStyle={{color: 'blue', paddingLeft: 8}} type='outline' icon={
-              <Icon name='edit' size={15} color='blue' />
-            } />
-            <Button containerStyle={styles.deleteButton} title='Delete' titleStyle={{color: 'red', paddingLeft: 8}} type='outline' icon={
-              <Icon name='close' size={15} color='red' />
-            } />
+            <Button 
+              containerStyle={styles.editButton} 
+              title='Edit' 
+              titleStyle={{color: 'blue', paddingLeft: 8}} 
+              type='outline' 
+              icon={<Icon name='edit' size={15} color='blue' />} 
+            />
+            <Button 
+              containerStyle={styles.deleteButton} 
+              title='Delete' 
+              titleStyle={{color: 'red', paddingLeft: 8}} 
+              type='outline' 
+              icon={<Icon name='close' size={15} color='red' />} 
+              onPress={onDeleteTodo}
+            />
           </View>
         </View>
       </TouchableOpacity>
