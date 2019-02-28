@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class extends Component {
   render() {
-    const { todo, onItemClick, onDeleteTodo } = this.props;
+    const { todo, onItemClick, onDeleteTodo, onEditTodo } = this.props;
     return (
       <TouchableOpacity activeOpacity={0.3} onPress={onItemClick}>
         <View style={styles.container}>
@@ -24,7 +24,8 @@ export default class extends Component {
               title='Edit' 
               titleStyle={{color: 'blue', paddingLeft: 8}} 
               type='outline' 
-              icon={<Icon name='edit' size={15} color='blue' />} 
+              icon={<Icon name='edit' size={15} color='blue' />}
+              onPress={onEditTodo}
             />
             <Button 
               containerStyle={styles.deleteButton} 

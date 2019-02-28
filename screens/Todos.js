@@ -38,6 +38,7 @@ export default class extends Component {
                         navigation.navigate('Todo', { todo: item })
                       }
                       onDeleteTodo={onDeleteTodo.bind(this, item)}
+                      onEditTodo={() => navigation.navigate('EditTodo', { todo: item })}
                     />
                   }}
                   keyExtractor={item => item._id}

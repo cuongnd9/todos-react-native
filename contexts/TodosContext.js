@@ -51,13 +51,29 @@ class TodosProvider extends Component {
       .catch(err => Alert.alert('Create failed!!!'))
   }
 
+  onEditTodo(todo) {
+    const { todos } = this.state;
+    const cloneTodos = [...todos];
+    const index = cloneTodos.findIndex(item => item._id === todo._id);
+    cloneTodos[index] = {...todo};
+
+    this.setState({
+      todos: cloneTodos
+    });
+
+    axios.put(`/todos/${todo._id}`, todo)
+      .then( res => Alert.alert(`${todo.name} was updated!!!`))
+      .catch(err => Alert.alert('Update failed!!!'))
+  }
+
   render() {
     return (
       <TodosContext.Provider
         value={{
           todos: this.state.todos,
           onDeleteTodo: this.onDeleteTodo.bind(this),
-          onAddTodo: this.onAddTodo.bind(this)
+          onAddTodo: this.onAddTodo.bind(this),
+          onEditTodo: this.onEditTodo.bind(this)
         }}
       >
         {this.props.children}
