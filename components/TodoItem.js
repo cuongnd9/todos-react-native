@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class extends Component {
   render() {
-    const { todo } = this.props;
+    const { todo, onItemClick } = this.props;
     return (
-      <TouchableOpacity activeOpacity={0.3}>
+      <TouchableOpacity activeOpacity={0.3} onPress={onItemClick}>
         <View style={styles.container}>
           <View style={styles.titleRow}>
             <Text style={styles.title}>{todo.name}</Text>

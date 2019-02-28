@@ -39,7 +39,12 @@ export default class extends Component {
         <FlatList
           data={this.state.todos}
           renderItem={({item}) => {
-            return <TodoItem todo={item} />
+            return <TodoItem 
+              todo={item} 
+              onItemClick={() => 
+                this.props.navigation.navigate('Todo', { todo: item })
+              } 
+            />
           }}
           keyExtractor={item => item._id}
           contentContainerStyle={styles.contentContainer}
@@ -47,7 +52,7 @@ export default class extends Component {
       </View>
     );
   }
-}
+};
 
 const styles =StyleSheet.create({
   container: {
